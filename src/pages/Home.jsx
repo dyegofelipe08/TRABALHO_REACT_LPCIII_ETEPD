@@ -4,10 +4,8 @@ import BotaoCadastro from '../components/BotaoCadastro'
 const Home = ()=>{
 return(
     <div>
-        <h1>
-            <h1 className="display-3 text-center m-4" >Cadastre-se</h1>
+            <h1 className="display-3 text-center m-4" >Cadastre os produtos</h1>
             <BotaoCadastro/>
-        </h1>
     </div>
 )
 }

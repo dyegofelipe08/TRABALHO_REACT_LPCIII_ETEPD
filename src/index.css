@@ -10,7 +10,12 @@
   justify-content: center;
   
 }
+.camposObrigatorios{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 
+}
 
 
 
