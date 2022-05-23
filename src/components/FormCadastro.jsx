@@ -1,5 +1,7 @@
 import React from 'react'
 import CamposObrigatorios from './CamposObrigatorios';
+import MensagemSucesso from './MensagemSucesso';
+import ProdutoSevice from '../app/ProdutoService';
 
  export default class FormCadastro extends React.Component{
 
@@ -9,7 +11,14 @@ import CamposObrigatorios from './CamposObrigatorios';
         descricao: '',
         preco: 0,
         fornecedor: '',
+        sucesso: false,
     }
+
+    constructor(){
+        super()
+        this.service = new ProdutoSevice();   
+     }
+
     onChange = (event)=>{
         const valor = event.target.value
         const nomeDOCampo = event.target.name
@@ -17,14 +26,41 @@ import CamposObrigatorios from './CamposObrigatorios';
             [nomeDOCampo]:valor
         })
     }
+    limparCampos(){
+        this.setState({
+            nome:'',
+            codigo:'',
+            descricao: '',
+            preco: 0,
+            fornecedor: '',
+            sucesso: false,
+    
+        }) 
+    
+    }
+
     onSubmite = (event)=>{
-        console.log(this.state)
+        const produto = {
+            'nome':this.state.nome,
+            'codigo': this.state.codigo,
+            'descricao': this.state.descricao,
+            'preco':this.state.preco,
+            'fornecedor':this.state.fornecedor,
+        }
+        
+        this.service.salvar(produto)
+        this.limparCampos()
+        this.setState({sucesso:true})
     }
 
     render(){
         return(
 <div className='container my-4'>
             <h1 className='text-center my-4'>Cadastro de Produtos</h1>
+
+            {
+                this.state.sucesso ? (<MensagemSucesso/>) : (<></>)
+            }
         <form>
             <div className="form-row">
                 <div className="form-group col-md-6">
@@ -80,6 +116,9 @@ import CamposObrigatorios from './CamposObrigatorios';
         
             <div className='botaoPosition m-4'>
             <button onClick={this.onSubmite} type='button' className="btn btn-primary">ENVIAR</button>
+            </div>
+            <div className='botaoPosition m-4'>
+            <button onClick={this.limparCampos} type='submit' className="btn btn-primary">LIMPAR CAMPOS</button>
             </div>
         </form>
         <CamposObrigatorios/>
