@@ -1,17 +1,26 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import ProdutoSevice from "../app/ProdutoService";
 
-export default class Consulta extends React.Component {
+
+
+class Consulta extends React.Component {
     state = {
-        produtos:[]
+        produtos: []
     }
-    constructor(){
+    constructor() {
         super()
         this.service = new ProdutoSevice();
     }
-    componentDidMount(){
+
+    preparaEditar = (codigo) =>{
+        this.props.history.push(`/cadastro-produtos/${codigo}`)
+    }
+
+
+    componentDidMount() {
         const produtos = this.service.obterProduto();
-        this.setState({produtos})
+        this.setState({ produtos })
     }
 
 
@@ -22,12 +31,13 @@ export default class Consulta extends React.Component {
                 <h1 className="text-center my-4" >Tabela de Produtos</h1>
                 <table className="table table-hover my-4">
                     <thead>
-                        <tr className="table-dark">
+                        <tr  className="table-dark">
                             <th scope="col">Nome</th>
                             <th scope="col">Código</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Preço (R$)</th>
                             <th scope="col">Fornecedor</th>
+                            <th scope="col" >Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,12 +45,16 @@ export default class Consulta extends React.Component {
                             this.state.produtos.map(
                                 produto => {
                                     return (
-                                        <tr>
+                                        <tr key={produto.codigo}>
                                             <th scope="row">{produto.nome}</th>
                                             <td>{produto.codigo}</td>
                                             <td> {produto.descricao} </td>
                                             <td>{produto.preco}</td>
                                             <td>{produto.fornecedor}</td>
+                                            <td>
+                                                <button onClick={()=> this.preparaEditar(produto.codigo)}  className="btn btn-primary mt-2" >Editar</button>
+                                                <button className="btn btn-danger botaoPosition mt-2" >Remover</button>
+                                            </td>
                                         </tr>
 
                                     )
@@ -55,5 +69,6 @@ export default class Consulta extends React.Component {
 
     }
 }
+export default withRouter(Consulta);
 
 

@@ -5,7 +5,7 @@ const BotaoCadastro = () => {
     return (
 
         <div className='botaoPosition'>
-         <Link className='btn btn-primary' to='/Cadastro' >Clique aqui</Link>
+         <Link className='btn btn-primary' to='/cadastro-produtos' >Clique aqui</Link>
             
         </div>
 
